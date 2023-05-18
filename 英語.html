@@ -4,28 +4,45 @@
     <meta charset="UTF-8">
     <title>Tango</title>
     <style>
-
+        .a:hover{
+            cursor: pointer;
+            background-color: rgb(0, 128, 208);
+            color: #fff;
+        }
     </style>
 </head>
 <body>
     <p>確定ボタンまたはエンターキーで採点</p>
     <h1 id="txt">forest</h1>
     
-    <input type="text" id="kotae" value="" onclick="txtC">
+    <input type="text" id="kotae" value="" width="200px">
     <input type="button" value="確定" id="btn">
     <input type="button" value="日本語と英語を切り替え" onclick="change()">
-    <table border="1" style="border-collapse: collapse" width="10px">
-        <tr width="10px"><td width="10px">b</td></tr>
-        <tr width="10px"><td width="10px">b</td></tr>
+    <table border="1" style="border-collapse: collapse" width="200px">
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
+        <tr><td class="a">　</td></tr>
         
     </table>
     <script>
         let txt = document.getElementById("txt");
-        let kotae = document.getElementById("kotae").value;
+        let kotae = document.getElementById("kotae");
         let btn = document.getElementById("btn");
         const en = ["ordinary","satisfy","possible","fact","resercher","believe","increase","a variety of ~","wide","apply","below","above","match","check ... out","championship","amaze","amazing","uncomfortable","well-known","costom-made","functional","stylish","opinin","support","be satisfied with","more and more"];
         const ja = ["ふつうの","まんぞくさせる","かのうな","じじつ","けんきゅうしゃ","しんじる","ふやす","さまざまなしゅるいの","はばのひろい","あてはまる","したに","うえに","しあい","をちょうさする","せんしゅけん","おどろかせる","おどろくべき","ふかいにさせる","ゆうめいな","ちゅうもんでつくった","じつようてきな","おしゃれな","いけん","をしえんする","にまんぞくする","ますます"];
         const jaFH = ["普通の","満足させる","可能な","事実","研究者","信じる","増やす","様々な種類の","幅の広い","当てはまる","下に","上に","試合","を調査する","選手権","驚かせる","驚くべき","不快にさせる","有名な","注文で作った","実用的な","おしゃれな","意見","を支援する","に満足する","ますます"];
+        let kouho = Array.from(document.getElementsByClassName("a"));
         let a = "en";
         function change(){
             if(a == "en"){
@@ -35,18 +52,36 @@
                 a = "en";
             }
         }
-        function txtC(){
-
-        }
-        if(true){
+        kotae.addEventListener("keyup",()=>{ //kotae.value
+            let searched = [];
+            ja.forEach((e) => {
+                if(e.includes(kotae.value)){
+                    searched.push(e);
+                }
+            });
+            kouho.forEach((e,i) => {
+                kouho[i].textContent = searched[i];
+            });
+        });
+        kouho.forEach((e,i) => {
+            kouho[i].addEventListener("click",(e)=>{
+                if(ja.indexOf(e.target.textContent) == en.indexOf(txt.textContent)){
+                    tugi();
+                }
+                
+            })
+        });
+        
+        function tugi(){
             if(a == "en"){
                 txt.textContent = en[Math.floor(Math.random()*en.length)];
             }
             if(a == "ja"){
                 txt.textContent = ja[Math.floor(Math.random()*ja.length)];
             }
-
+            kotae.value = "";
         }
+        tugi();
     </script>
 </body>
 </html>
