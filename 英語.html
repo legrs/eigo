@@ -12,7 +12,7 @@
         div{
             position: absolute;
             left: 300px;
-            bottom: 200px;
+            bottom: 100px;
             background-color: #76f269;
 
             padding: 10px;
@@ -20,6 +20,17 @@
     </style>
 </head>
 <body>
+    <!-- なにみてんの裕二 -->
+    <!-- なにみてんの裕二 -->
+    <!-- なにみてんの裕二 -->
+    <!-- なにみてんの裕二 -->
+    <!-- なにみてんの裕二 -->
+    <!-- なにみてんの裕二 -->
+    <!-- なにみてんの裕二 -->
+    <!-- なにみてんの裕二 -->
+    <!-- なにみてんの裕二 -->
+    <!-- なにみてんの裕二 -->
+    <!-- なにみてんの裕二 -->
     <p>確定ボタンまたはエンターキーで採点</p>
     <h1 id="txt">forest</h1>
     
@@ -27,6 +38,7 @@
     <input type="button" value="確定" id="btn" onclick="kakutei()">
     <input type="button" value="日本語と英語を切り替え" onclick="change()">
     <input type="button" value="スキップ" onclick="skip()">
+    <input type="button" value="候補なしにする" onclick="kohon()" id="kouhok">
     <table border="1" style="border-collapse: collapse" width="200px">
         <tr><td class="a">　</td></tr>
         <tr><td class="a">　</td></tr>
@@ -47,29 +59,47 @@
     <div>
         <h1 id="ue">test</h1>
         <h1 id="sita">テスト</h1>
+<p>正解数：<span id="seikai">0</span></p>
+
     </div>
     <script>
+        console.log("[=== なにみてんだ裕二 ===]");
+        console.log("[=== なにみてんだ裕二 ===]");
+        console.log("[=== なにみてんだ裕二 ===]");
+        console.log("[=== なにみてんだ裕二 ===]");
+        console.log("[=== なにみてんだ裕二 ===]");
+        let kohok = document.getElementById("kouhok");
         let txt = document.getElementById("txt");
         let kotae = document.getElementById("kotae");
         let btn = document.getElementById("btn");
         let ue = document.getElementById("ue");
         let st = document.getElementById("sita");
+        let se = document.getElementById("seikai");
         const en = ["ordinary","satisfy","possible","fact","resercher","believe","increase","a variety of ~","wide","apply","below","above","match","check ... out","championship","amaze","amazing","uncomfortable","well-known","costom-made","functional","stylish","opinin","support","be satisfied with","more and more"];
         const ja = ["ふつうの","まんぞくさせる","かのうな","じじつ","けんきゅうしゃ","しんじる","ふやす","さまざまなしゅるいの","はばのひろい","あてはまる","したに","うえに","しあい","をちょうさする","せんしゅけん","おどろかせる","おどろくべき","ふかいにさせる","ゆうめいな","ちゅうもんでつくった","じつようてきな","おしゃれな","いけん","をしえんする","にまんぞくする","ますます"];
         const jaFH = ["普通の","満足させる","可能な","事実","研究者","信じる","増やす","様々な種類の","幅の広い","当てはまる","下に","上に","試合","を調査する","選手権","驚かせる","驚くべき","不快にさせる","有名な","注文で作った","実用的な","おしゃれな","意見","を支援する","に満足する","ますます"];
         let kouho = Array.from(document.getElementsByClassName("a"));
         let a = "en";
+        let b = true;
         function change(){
             if(a == "en"){
                 a = "ja";
             }else{
                 a = "en";
             }
-            console.log(a);
             tugi();
         }
+        function kohon(){
+            if(b == false){
+                kohok.value = "候補ありにする";
+                b = true;
+            }else{
+                kohok.value = "候補なしにする";
+                b = false;
+            }
+        }
         kotae.addEventListener("keyup",()=>{ //kotae.value
-            if(a == "en"){
+            if(a == "en" && b == true){
                 let searched = [];
                 ja.forEach((e,i) => {
                     if(e.includes(kotae.value)){
@@ -77,28 +107,22 @@
                     }
                 });
                 kouho.forEach((e,i) => {
-            
                 kouho[i].textContent = searched[i];
-            
-            });
+                });
             }
-            
         });
             window.document.onkeydown = function(event){
                 if (event.key === 'Enter') {
-                    console.log("a");
-                    if(kouho[1].textContent == ""){
-                        console.log("b");
-                        if(a =="en"){
-                            console.log(ja.indexOf(kouho[0].textContent) == en.indexOf(txt.textContent));
-                            if(jaFH.indexOf(kouho[0].textContent) == en.indexOf(txt.textContent)){
-                                tugi();
-                            }
+                    if(a =="en"){
+                        if(jaFH.indexOf(kouho[0].textContent) == en.indexOf(txt.textContent) || ja.indexOf(kotae.value) == en.indexOf(txt.textContent)){
+                            tugi();
+                            se.textContent = Number(se.textContent) + 1;
                         }
                     }
                     if(a =="ja"){
                         if(en.indexOf(kotae.value) == jaFH.indexOf(txt.textContent)){
                             tugi();
+                            se.textContent = Number(se.textContent) + 1;
                         }
                     }
                 }
@@ -110,12 +134,14 @@
                         console.log(ja.indexOf(kouho[0].textContent) == en.indexOf(txt.textContent));
                         if(jaFH.indexOf(kouho[0].textContent) == en.indexOf(txt.textContent)){
                             tugi();
+                            se.textContent = Number(se.textContent) + 1;
                         }
                     }
                 }
                 if(a =="ja"){
                     if(en.indexOf(kotae.value) == jaFH.indexOf(txt.textContent)){
                         tugi();
+                        se.textContent = Number(se.textContent) + 1;
                     }
                     }
             }
@@ -124,6 +150,7 @@
                 if(a=="en"){
                     if(jaFH.indexOf(e.target.textContent) == en.indexOf(txt.textContent)){
                         tugi();
+                        se.textContent = Number(se.textContent) + 1;
                     }
                 }
             })
